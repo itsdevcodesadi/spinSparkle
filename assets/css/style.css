@@ -1,0 +1,673 @@
+/* Casino Luxury Design System */
+
+:root {
+  /* Casino theme colors */
+  --casino-gold: 45 100% 70%;
+  --casino-gold-bright: #ffed4e;
+  --casino-dark: 14 100% 3%;
+  --casino-dark-lighter: #2d1810;
+  --casino-accent: 14 30% 12%;
+
+  /* Text colors */
+  --foreground: #ffffff;
+  --muted-foreground: #b3b3b3;
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #cc9900, #ffed4e);
+  --gradient-casino-bg: radial-gradient(
+    ellipse at center,
+    #2d1810 0%,
+    #1a0b00 70%
+  );
+
+  /* Shadows */
+  --shadow-gold: 0 10px 30px -10px rgba(255, 215, 0, 0.4);
+  --shadow-luxury: 0 20px 60px -20px rgba(0, 0, 0, 0.8);
+
+  /* Border radius */
+  --radius: 0.75rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Remove the background from body */
+  background: none;
+}
+
+/* Typography */
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-medium {
+  font-weight: 500;
+}
+
+.text-center {
+  text-align: center;
+}
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* Colors */
+.text-green-400 {
+  color: #4ade80;
+}
+.text-orange-400 {
+  color: #fb923c;
+}
+.text-red-400 {
+  color: #f87171;
+}
+.text-white {
+  color: white;
+}
+
+/* Casino specific classes */
+.casino-gradient-text {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-casino-gold {
+  color: hsl(var(--casino-gold));
+}
+
+.text-casino-gold-bright {
+  color: var(--casino-gold-bright);
+}
+
+.text-muted-foreground {
+  color: var(--muted-foreground);
+}
+
+.drop-shadow-2xl {
+  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+}
+
+/* Layout */
+.min-h-screen {
+  min-height: 100vh;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.flex {
+  display: flex;
+}
+.grid {
+  display: grid;
+}
+.hidden {
+  display: none;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.text-center {
+  text-align: center;
+}
+
+.max-w-6xl {
+  max-width: 72rem;
+}
+.max-w-4xl {
+  max-width: 56rem;
+}
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-sm {
+  max-width: 24rem;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.pt-16 {
+  padding-top: 4rem;
+}
+.pb-8 {
+  padding-bottom: 2rem;
+}
+.pb-12 {
+  padding-bottom: 3rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-16 {
+  margin-top: 4rem;
+}
+.mt-20 {
+  margin-top: 5rem;
+}
+
+/* Grid */
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+.gap-8 {
+  gap: 2rem;
+}
+
+.bg-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.fixed-bg {
+  position: fixed;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+              url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
+}
+
+/* Make sure site content sits above background */
+.site-content {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+@media (max-width: 571px) {
+  .hero-bg h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .hero-bg h2 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  .hero-bg p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+/* Spin wheel container */
+.spin-wheel-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 4rem 1rem;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: 0.5rem;
+  z-index: 10;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 30px solid hsl(var(--casino-gold));
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.7));
+}
+
+.wheel-wrapper {
+  position: relative;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.roulette-wheel {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  box-shadow: var(--shadow-luxury);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transition: transform 4.5s cubic-bezier(0.15, 0.85, 0.25, 1);
+}
+
+.roulette-wheel img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  border-radius: var(--radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--casino-gold);
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.btn-casino {
+  background: var(--gradient-gold);
+  color: hsl(var(--casino-dark));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid var(--casino-gold);
+  height: 3.5rem;
+  padding: 1rem 3rem;
+  font-size: 1.125rem;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-gold);
+  position: relative;
+  z-index: 20;
+}
+
+.btn-casino:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px -10px rgba(255, 215, 0, 0.6);
+}
+
+.btn-casino-outline {
+  border: 2px solid hsl(var(--casino-gold));
+  color: hsl(var(--casino-gold));
+  background: transparent;
+  height: 3rem;
+  padding: 0 2rem;
+}
+
+.btn-casino-outline:hover {
+  background: hsl(var(--casino-gold));
+  color: #1a0b00;
+}
+
+.btn-claim {
+  background: linear-gradient(to right, #16a34a, #22c55e);
+  border-radius: 9999px;
+  color: #1a0b00;
+  font-weight: bold;
+  border: 2px solid hsl(var(--casino-gold));
+  width: 100%;
+  height: 3.5rem;
+  padding: 0 1.5rem;
+}
+
+.btn-claim:hover {
+  background: linear-gradient(to right, #059669, #047857);
+}
+
+/* VIP Section */
+.vip-section {
+  width: 100%;
+  background-color: hsl(var(--casino-accent) / 0.5);
+  backdrop-filter: blur(4px);
+  border-top: 1px solid hsl(var(--casino-gold) / 0.2);
+}
+
+/* Form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 28rem;
+  margin: 0 auto 3rem auto;
+}
+
+.input {
+  height: 3rem;
+  padding: 0 1rem;
+  background: hsl(var(--casino-dark));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: var(--radius);
+  color: var(--foreground);
+  font-size: 1rem;
+}
+
+.input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--casino-gold);
+}
+
+/* Footer */
+.footer {
+  background-color: hsl(var(--casino-dark) / 0.9);
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+.footer-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.footer-link {
+  color: inherit;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--casino-gold);
+}
+
+.footer-separator {
+  display: none;
+}
+
+.footer-copyright {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: rgba(179, 179, 179, 0.5);
+}
+
+/* Popup Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: hsl(var(--casino-dark));
+  border: 2px solid var(--casino-gold);
+  border-radius: var(--radius);
+  max-width: 90vw;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: center;
+  animation: modalSlide 0.3s ease;
+}
+
+.modal-content.win-modal {
+  max-width: 32rem;
+}
+
+@keyframes modalSlide {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+
+  overflow-y: auto;
+  border: 2px solid hsl(var(--casino-gold));
+  gap: 1rem;
+  border-radius: 0.75rem;
+  max-width: 28rem;
+}
+
+.bonus-code {
+  background: hsl(var(--casino-gold));
+  color: hsl(var(--casino-dark));
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.logo-img {
+  width: 6rem;
+  height: auto;
+  margin: 0 auto 1rem auto;
+  object-fit: contain;
+}
+
+/* Confetti Container */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .roulette-wheel {
+    width: 450px;
+    height: 450px;
+  }
+
+  .wheel-pointer {
+    top: 1.5rem;
+  }
+
+  .form-group {
+    flex-direction: row;
+  }
+
+  .footer-links {
+    flex-direction: row;
+  }
+
+  .footer-separator {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .roulette-wheel {
+    width: 550px;
+    height: 550px;
+  }
+
+  .spin-wheel-container {
+    padding: 4rem 1rem;
+  }
+
+  .wheel-wrapper {
+    margin-bottom: 3rem;
+  }
+
+  .text-4xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+  .text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+  .text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .logo-img {
+    width: 8rem;
+  }
+
+  .modal-body {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+  .text-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+}
+
+/* Spinning animation states */
+.roulette-wheel.spinning {
+  transition: transform 4.5s cubic-bezier(0.15, 0.85, 0.25, 1);
+}
+
+.roulette-wheel.spinning-second {
+  transition: transform 5.2s cubic-bezier(0.15, 0.85, 0.25, 1);
+}

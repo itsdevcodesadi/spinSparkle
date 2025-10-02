@@ -1,0 +1,91 @@
+/* Casino Luxury Design System */
+:root {
+  --background: hsl(14, 100%, 3%);
+  --foreground: hsl(0, 0%, 100%);
+  --casino-gold: 45 100% 70%;
+  --casino-gold-bright: hsl(45, 100%, 80%);
+  --casino-dark: hsl(14, 100%, 3%);
+  --casino-dark-lighter: hsl(14, 50%, 8%);
+  --casino-accent: 14 30% 12%;
+
+  --gradient-gold: linear-gradient(
+    135deg,
+    hsl(45, 100%, 60%),
+    hsl(45, 100%, 80%)
+  );
+  --gradient-casino-bg: radial-gradient(
+    ellipse at center,
+    hsl(14, 50%, 8%) 0%,
+    hsl(14, 100%, 3%) 70%
+  );
+
+  --shadow-gold: 0 10px 30px -10px hsl(45, 100%, 50% / 0.4);
+  --shadow-luxury: 0 20px 60px -20px hsl(0 0% 0% / 0.8);
+  --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  background: var(--gradient-casino-bg);
+  color: var(--foreground);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4rem 1rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  margin-top: 0;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.terms-box {
+background-color: hsl(var(--casino-accent) / .3);
+  border: 1px solid hsl(var(--casino-gold) / .2);
+  border-radius: 12px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: bold;
+  color: hsl(var(--casino-gold));
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+section p {
+  color: hsl(0, 0%, 70%);
+  line-height: 1.625;
+}
+
+.return-link {
+  display: inline-block;
+  margin-top: 3rem;
+  text-decoration: none;
+  font-size: 1.125rem;
+  color: hsl(var(--casino-gold));
+  transition: var(--transition-luxury);
+}
+
+.return-link:hover {
+  text-decoration: underline;
+}
