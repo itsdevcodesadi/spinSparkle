@@ -260,14 +260,22 @@ body {
   gap: 2rem;
 }
 
-
 .fixed-bg {
   position: fixed;
   inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
   z-index: 0;
   pointer-events: none;
-
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+    url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
 }
+
+
+@supports (-webkit-touch-callout: none) {
+  .fixed-bg {
+    position: absolute; /* Fallback for Safari */
+  }
+}
+
 
 /* Make sure site content sits above background */
 .site-content {
@@ -275,12 +283,8 @@ body {
   z-index: 1;
 }
 
-
 /* Hero background */
 .hero-bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-              url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
-              background-attachment: fixed;
   background-size: cover;
   background-position: center;
 }
