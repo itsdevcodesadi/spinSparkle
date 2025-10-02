@@ -260,21 +260,28 @@ body {
   gap: 2rem;
 }
 
+
+/* keep this for non-Safari (desktop / chrome) */
 .fixed-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
-    url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
-
-  /* Safari optimizations */
-  transform: translateZ(0);   /* Force GPU */
-  will-change: transform;     /* Hint browser for smoothness */
+            url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
+  will-change: transform;
+  transform: translateZ(0);
   backface-visibility: hidden;
-  -webkit-transform: translate3d(0,0,0); /* iOS Safari hack */
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
 }
 
+/* reduce heavy repaint-causing effects on small devices (helps a lot) */
+@media (max-width: 900px) {
+  .vip-section { backdrop-filter: none; }      /* expensive on iOS */
+  .roulette-wheel { box-shadow: none; }        /* large shadows cause repaints */
+  .drop-shadow-2xl { filter: none; }           /* disables drop-shadow on mobiles */
+}
 
 
 /* Make sure site content sits above background */
@@ -283,11 +290,8 @@ body {
   z-index: 1;
 }
 
-/* Hero background */
-.hero-bg {
-  background-size: cover;
-  background-position: center;
-}
+
+
 
 @media (max-width: 571px) {
   .hero-bg h1 {

@@ -213,3 +213,59 @@ function addVisualEnhancements() {
 
     
 }
+
+
+
+
+
+// Safari-smooth fixed background shim
+(function () {
+  // Detect iOS Safari / Safari (robustish)
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const isIOS = /iP(hone|od|ad)/.test(navigator.platform) || 
+                (navigator.maxTouchPoints && /MacIntel/.test(navigator.platform));
+  const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  const isMobileSafari = isIOS && isSafari && !/CriOS|FxiOS|OPiOS|EdgiOS|Android/i.test(ua);
+
+  // Run for Safari (desktop and mobile Safari) — but limit to devices that need it
+  if (!isSafari && !isMobileSafari) return;
+
+  const bg = document.querySelector('.fixed-bg');
+  if (!bg) return;
+
+  // Switch to absolute so we control visual position via transform
+  bg.style.position = 'absolute';
+  bg.style.top = '0';
+  bg.style.left = '0';
+  bg.style.width = '100%';
+  bg.style.height = '100%';
+  bg.style.willChange = 'transform';
+  bg.style.webkitTransform = 'translate3d(0,0,0)';
+  bg.style.transform = 'translate3d(0,0,0)';
+
+  let latestKnownScrollY = 0;
+  let ticking = false;
+
+  function onScroll() {
+    latestKnownScrollY = window.scrollY || window.pageYOffset || 0;
+    if (!ticking) {
+      window.requestAnimationFrame(update);
+      ticking = true;
+    }
+  }
+
+  function update() {
+    // Move the background down by the scroll amount so it stays visually fixed
+    const y = Math.round(latestKnownScrollY);
+    const t = `translate3d(0, ${y}px, 0)`;
+    bg.style.webkitTransform = t;
+    bg.style.transform = t;
+    ticking = false;
+  }
+
+  // Use passive listener for better performance
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // in case page is already scrolled on load
+  onScroll();
+})();
