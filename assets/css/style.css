@@ -262,19 +262,19 @@ body {
 
 .fixed-bg {
   position: fixed;
-  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
     url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
+
+  /* Safari optimizations */
+  transform: translateZ(0);   /* Force GPU */
+  will-change: transform;     /* Hint browser for smoothness */
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0); /* iOS Safari hack */
 }
 
-
-@supports (-webkit-touch-callout: none) {
-  .fixed-bg {
-    position: absolute; /* Fallback for Safari */
-  }
-}
 
 
 /* Make sure site content sits above background */
