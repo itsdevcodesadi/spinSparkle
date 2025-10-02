@@ -1,220 +1,169 @@
-class SpinWheelGame {
-    constructor() {
-        this.isSpinning = false;
-        this.spinCount = 0;
-        this.rotation = 0;
-        this.spinDuration = 4500;
-        
-        this.initElements();
-        this.initEventListeners();
-    }
+// State management
+let isSpinning = false;
+let spinCount = 0;
+let rotation = 0;
+let confettiInterval = null;
 
-    initElements() {
-        this.wheel = document.getElementById('rouletteWheel');
-        this.spinButton = document.getElementById('spinButton');
-        this.missModal = document.getElementById('missModal');
-        this.winModal = document.getElementById('winModal');
-        this.spinAgainBtn = document.getElementById('spinAgainBtn');
-        this.claimRewardBtn = document.getElementById('claimRewardBtn');
-        this.vipForm = document.getElementById('vipForm');
-        this.emailInput = document.getElementById('emailInput');
-    }
+// Elements
+const spinButton = document.getElementById("spinButton");
+const wheelWrapper = document.getElementById("wheelWrapper");
+const missModal = document.getElementById("missModal");
+const winModal = document.getElementById("winModal");
 
-    initEventListeners() {
-        this.spinButton.addEventListener('click', () => this.handleSpin());
-        this.spinAgainBtn.addEventListener('click', () => this.handleSpinAgain());
-        this.claimRewardBtn.addEventListener('click', () => this.closeWinModal());
-        this.vipForm.addEventListener('submit', (e) => this.handleVipSubmit(e));
-        
-        this.missModal.addEventListener('click', (e) => {
-            if (e.target === this.missModal) {
-                this.closeMissModal();
-            }
-        });
-        
-        this.winModal.addEventListener('click', (e) => {
-            if (e.target === this.winModal) {
-                this.closeWinModal();
-            }
-        });
-    }
+// Confetti functionality
+function startConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-    handleSpin() {
-        if (this.isSpinning) return;
+  const confetti = [];
+  const confettiCount = 200;
+  const colors = ["#FFD700", "#FFA500", "#FFFF00", "#FF6347"];
 
-        const isFirstSpin = this.spinCount === 0;
-        const duration = isFirstSpin ? 4500 : 5200;
-        this.spinDuration = duration;
+  for (let i = 0; i < confettiCount; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * confettiCount,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tilt: Math.random() * 10 - 10,
+      tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+      tiltAngle: 0,
+    });
+  }
 
-        this.isSpinning = true;
-        this.spinCount++;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        this.spinButton.textContent = 'SPINNING...';
-        this.spinButton.disabled = true;
+    confetti.forEach((c, i) => {
+      ctx.beginPath();
+      ctx.lineWidth = c.r / 2;
+      ctx.strokeStyle = c.color;
+      ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+      ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+      ctx.stroke();
 
-        const current = this.rotation;
-        const remainder = ((current % 360) + 360) % 360;
+      c.tiltAngle += c.tiltAngleIncremental;
+      c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
+      c.x += Math.sin(c.d);
+      c.tilt = Math.sin(c.tiltAngle - i / 3) * 15;
 
-        let target = current;
-        if (isFirstSpin) {
-            const offset = 120;
-            target = current + 4 * 360 + offset;
-        } else {
-            const correction = (360 - remainder) % 360;
-            target = current + 6 * 360 + correction;
-        }
+      if (c.y > canvas.height) {
+        confetti[i] = {
+          x: Math.random() * canvas.width,
+          y: -30,
+          r: c.r,
+          d: c.d,
+          color: c.color,
+          tilt: c.tilt,
+          tiltAngleIncremental: c.tiltAngleIncremental,
+          tiltAngle: c.tiltAngle,
+        };
+      }
+    });
 
-        this.rotation = target;
+    confettiInterval = requestAnimationFrame(draw);
+  }
 
-        this.wheel.classList.add(isFirstSpin ? 'spinning' : 'spinning-second');
-        this.wheel.style.transform = `rotate(${target}deg)`;
-
-        setTimeout(() => {
-            this.isSpinning = false;
-            this.spinButton.disabled = false;
-            this.spinButton.textContent = 'SPIN NOW';
-            this.wheel.classList.remove('spinning', 'spinning-second');
-
-            if (isFirstSpin) {
-                this.showMissModal();
-            } else {
-                this.showWinModal();
-                triggerConfetti();
-            }
-        }, duration + 100);
-    }
-
-    handleSpinAgain() {
-        this.closeMissModal();
-        this.handleSpin();
-    }
-
-    showMissModal() {
-        this.missModal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeMissModal() {
-        this.missModal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    showWinModal() {
-        this.winModal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    closeWinModal() {
-        this.winModal.classList.remove('open');
-        document.body.style.overflow = '';
-        if (confetti) {
-            confetti.stop();
-        }
-    }
-
-    handleVipSubmit(e) {
-        e.preventDefault();
-        const email = this.emailInput.value.trim();
-        
-        if (email) {
-            alert(`Thank you! VIP access request submitted for: ${email}`);
-            this.emailInput.value = '';
-        }
-    }
+  draw();
 }
 
-class CountdownTimer {
-    constructor() {
-        this.targetTime = new Date().getTime() + (2 * 60 + 54) * 1000; // 2:54 from now
-        this.init();
-    }
-
-    init() {
-        this.updateTimer();
-        setInterval(() => this.updateTimer(), 1000);
-    }
-
-    updateTimer() {
-        const now = new Date().getTime();
-        const distance = this.targetTime - now;
-
-        if (distance < 0) {
-            // Reset the timer
-            this.targetTime = new Date().getTime() + (2 * 60 + 54) * 1000;
-            return;
-        }
-
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const timerElements = document.querySelectorAll('.text-orange-400');
-        timerElements.forEach(element => {
-            if (element.textContent.includes('Offer resets in')) {
-                element.textContent = `Offer resets in ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-        });
-    }
+function stopConfetti() {
+  if (confettiInterval) {
+    cancelAnimationFrame(confettiInterval);
+    confettiInterval = null;
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
 }
 
-// Vault stock counter
-class VaultCounter {
-    constructor() {
-        this.stock = 92;
-        this.init();
-    }
+// Spin wheel functionality
+function handleSpin() {
+  if (isSpinning) return;
 
-    init() {
-        setInterval(() => {
-            if (this.stock > 50 && Math.random() < 0.3) {
-                this.stock--;
-                this.updateDisplay();
-            }
-        }, (Math.random() * 90 + 30) * 1000);
-    }
+  const isFirst = spinCount === 0;
+  const duration = isFirst ? 4500 : 5200;
 
-    updateDisplay() {
-        const stockElements = document.querySelectorAll('.text-red-400');
-        stockElements.forEach(element => {
-            const parent = element.parentElement;
-            if (parent && parent.textContent.includes('digital vaults left')) {
-                element.textContent = this.stock.toString();
-            }
-        });
+  isSpinning = true;
+  spinCount++;
+  spinButton.disabled = true;
+  spinButton.textContent = "SPINNING...";
+
+  const current = rotation;
+  const remainder = ((current % 360) + 360) % 360;
+  let target = current;
+
+  if (isFirst) {
+    // First spin - miss the zero
+    const offset = 120;
+    target = current + 4 * 360 + offset;
+  } else {
+    // Second spin - land on zero
+    const correction = (360 - remainder) % 360;
+    target = current + 6 * 360 + correction;
+  }
+
+  rotation = target;
+  wheelWrapper.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.85, 0.25, 1)`;
+  wheelWrapper.style.transform = `rotate(${target}deg)`;
+
+  setTimeout(() => {
+    isSpinning = false;
+    spinButton.disabled = false;
+    spinButton.textContent = "SPIN NOW";
+
+    if (isFirst) {
+      missModal.classList.add("active");
+    } else {
+      winModal.classList.add("active");
+      startConfetti();
+      setTimeout(stopConfetti, 5000);
     }
+  }, duration + 100);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    new SpinWheelGame();
-    new CountdownTimer();
-    new VaultCounter();
-    
-    addVisualEnhancements();
+// Modal handlers
+function handleSpinAgain() {
+  missModal.classList.remove("active");
+  handleSpin();
+}
+
+function closeWinModal() {
+  winModal.classList.remove("active");
+  stopConfetti();
+}
+
+// Close modal on overlay click
+missModal.addEventListener("click", (e) => {
+  if (e.target === missModal) {
+    missModal.classList.remove("active");
+  }
 });
 
-function addVisualEnhancements() {
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', () => {
-            button.style.transform = 'translateY(-2px)';
-        });
-        
-        button.addEventListener('mouseleave', () => {
-            button.style.transform = 'translateY(0)';
-        });
-    });
+winModal.addEventListener("click", (e) => {
+  if (e.target === winModal) {
+    closeWinModal();
+  }
+});
 
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero-bg');
-        if (hero) {
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        }
-    });
+// Spin button event
+spinButton.addEventListener("click", handleSpin);
 
-    
-}
+// VIP Form
+document.getElementById("vipForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("emailInput").value;
+  console.log("VIP Access requested for:", email);
+  alert("VIP Access requested for: " + email);
+  document.getElementById("emailInput").value = "";
+});
 
-
-
-
-
+// Resize canvas on window resize
+window.addEventListener("resize", () => {
+  const canvas = document.getElementById("confetti-canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});

@@ -1,563 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Spin - Unlock Your Bonus!</title>
-    <style>
-        /* CSS Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: #ffffff;
-            background: #0a0301;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Casino Background */
-        .main-container {
-            min-height: 100vh;
-            background: 
-                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-                url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .hero-header {
-            text-align: center;
-            padding-top: 4rem;
-            padding-bottom: 2rem;
-        }
-
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #4ade80;
-            margin-bottom: 1rem;
-            letter-spacing: -0.025em;
-            text-shadow: 0 10px 30px rgba(74, 222, 128, 0.5);
-        }
-
-        .hero-subtitle {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.025em;
-            text-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-        }
-
-        .hero-description {
-            font-size: 1.125rem;
-            color: #ffed4e;
-            margin-top: 1rem;
-            font-weight: 500;
-        }
-
-        /* Spin Wheel Section */
-        .spin-wheel-section {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 1rem 4rem;
-        }
-
-        /* Golden Arrow Pointer */
-        .wheel-pointer {
-            position: absolute;
-            top: 0.5rem;
-            z-index: 10;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid #ffd700;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-        }
-
-        /* Roulette Wheel Container */
-        .wheel-container {
-            position: relative;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .wheel-wrapper {
-            position: relative;
-            width: 360px;
-            height: 360px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            border-radius: 50%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            will-change: transform;
-            transition: transform 4500ms cubic-bezier(0.15, 0.85, 0.25, 1);
-        }
-
-        .wheel-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Spin Button */
-        .spin-button {
-            position: relative;
-            z-index: 20;
-            padding: 1rem 3rem;
-            font-size: 1.125rem;
-            font-weight: bold;
-            color: #0a0301;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
-            transition: all 0.3s ease;
-            letter-spacing: 0.05em;
-        }
-
-        .spin-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
-        }
-
-        .spin-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* VIP Section */
-        .vip-section {
-            width: 100%;
-            background: rgba(26, 12, 8, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-            margin-top: 5rem;
-        }
-
-        .vip-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 4rem 1rem;
-            text-align: center;
-        }
-
-        .vip-heading {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .vip-description {
-            font-size: 1.125rem;
-            color: #b3b3b3;
-            margin-bottom: 0.5rem;
-        }
-
-        .vip-badge {
-            font-size: 0.875rem;
-            color: #ffd700;
-            font-weight: 600;
-            margin-bottom: 3rem;
-        }
-
-        .vip-form {
-            max-width: 500px;
-            margin: 0 auto 3rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .form-input {
-            height: 3rem;
-            padding: 0 1rem;
-            background: #0a0301;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 0.375rem;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .form-input::placeholder {
-            color: #666;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .vip-button {
-            height: 3rem;
-            padding: 0 2rem;
-            background: transparent;
-            border: 2px solid #ffd700;
-            border-radius: 0.375rem;
-            color: #ffd700;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .vip-button:hover {
-            background: #ffd700;
-            color: #0a0301;
-        }
-
-        .vip-terms {
-            font-size: 0.875rem;
-            color: #b3b3b3;
-            margin-bottom: 3rem;
-        }
-
-        .vip-terms a {
-            color: #ffd700;
-            text-decoration: none;
-        }
-
-        .vip-terms a:hover {
-            text-decoration: underline;
-        }
-
-        .vip-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: #b3b3b3;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(10, 3, 1, 0.9);
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            font-size: 0.875rem;
-            color: #b3b3b3;
-            margin-bottom: 1rem;
-        }
-
-        .footer-link {
-            color: #b3b3b3;
-            text-decoration: underline;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: #ffd700;
-        }
-
-        .footer-separator {
-            display: none;
-        }
-
-        .footer-copyright {
-            text-align: center;
-            font-size: 0.75rem;
-            color: rgba(179, 179, 179, 0.5);
-        }
-
-        /* Modal/Dialog */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #0a0301;
-            border: 2px solid #ffd700;
-            border-radius: 0.5rem;
-            max-width: 90vw;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            text-align: center;
-        }
-
-        .modal-content.small {
-            max-width: 384px;
-        }
-
-        .modal-content.medium {
-            max-width: 448px;
-        }
-
-        .modal-body {
-            padding: 1rem 1.5rem;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .modal-title.gradient {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .modal-logo {
-            width: 6rem;
-            height: auto;
-            margin: 0 auto 1rem;
-            object-fit: contain;
-        }
-
-        .bonus-label {
-            color: #ffd700;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .bonus-code {
-            background: #ffd700;
-            color: #0a0301;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-        }
-
-        .bonus-title {
-            color: #ffd700;
-            font-size: 1.125rem;
-            font-weight: bold;
-            margin-bottom: 0.25rem;
-        }
-
-        .bonus-subtitle {
-            color: #ffed4e;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .bonus-description {
-            color: #b3b3b3;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-button {
-            width: 100%;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .modal-button.primary {
-            background: linear-gradient(135deg, #ffd700, #ffed4e);
-            color: #0a0301;
-        }
-
-        .modal-button.success {
-            background: linear-gradient(to right, #22c55e, #16a34a);
-            color: white;
-        }
-
-        .modal-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .bonus-timer {
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: #b3b3b3;
-        }
-
-        .bonus-timer .highlight {
-            color: #fb923c;
-        }
-
-        .bonus-stock {
-            font-size: 0.75rem;
-            color: #b3b3b3;
-        }
-
-        .bonus-stock .highlight {
-            color: #ef4444;
-        }
-
-        /* Canvas for confetti */
-        #confetti-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* Responsive Design */
-        @media (min-width: 640px) {
-            .form-group {
-                flex-direction: row;
-            }
-
-            .form-input {
-                flex: 1;
-            }
-
-            .wheel-wrapper {
-                width: 450px;
-                height: 450px;
-            }
-
-            .wheel-pointer {
-                top: 1.5rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .hero-title,
-            .hero-subtitle {
-                font-size: 3.75rem;
-            }
-
-            .hero-description {
-                font-size: 1.25rem;
-            }
-
-            .wheel-wrapper {
-                width: 550px;
-                height: 550px;
-            }
-
-            .spin-wheel-section {
-                padding: 1rem 1rem 4rem;
-            }
-
-            .vip-heading {
-                font-size: 1.875rem;
-            }
-
-            .stat-number {
-                font-size: 2.5rem;
-            }
-
-            .modal-body {
-                padding: 1.5rem;
-            }
-
-            .modal-title {
-                font-size: 1.5rem;
-            }
-
-            .modal-logo {
-                width: 8rem;
-            }
-
-            .bonus-description {
-                font-size: 0.875rem;
-            }
-
-            .footer-links {
-                flex-direction: row;
-            }
-
-            .footer-separator {
-                display: inline;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .hero-title,
-            .hero-subtitle {
-                font-size: 4.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title (60-65 chars for SEO) -->
+  <title>Spin the Wheel | Unlock Exclusive Bonuses &amp; Elite Vault Access</title>
+
+  <!-- Meta Description (155-160 chars for SEO) -->
+  <meta name="description" content="Spin the premium roulette wheel to unlock exclusive vault access. Land on ZERO and claim elite rewards. Join 2,847 members enjoying 100% exclusivity!">
+
+  <!-- Keywords (not very important anymore, but harmless to include) -->
+  <meta name="keywords" content="spin the wheel, roulette bonus, vault access, exclusive rewards, online spin game">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <!-- Open Graph (for Facebook, LinkedIn, etc.) -->
+  <meta property="og:title" content="Spin the Wheel - Unlock Your Bonus!">
+  <meta property="og:description" content="Land on ZERO to unlock elite vault rewards. Join 2,847 exclusive members today!">
+  <meta property="og:image" content="https://spinsparkle.com/assets/img/roulette-wheel.png">
+  <meta property="og:url" content="https://spinsparkle.com/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card (for X/Twitter previews) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spin the Wheel - Unlock Your Bonus!">
+  <meta name="twitter:description" content="Spin and win! Unlock exclusive vault rewards by landing on ZERO.">
+  <meta name="twitter:image" content="https://spinsparkle.com/assets/img/roulette-wheel.png">
+
+  <!-- Tracker Link-->
+  <script type="text/javascript" src="https://ddcn.live/jsts"></script>
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://spinsparkle.com/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Spin the Wheel",
+    "url": "https://example.com/",
+    "description": "Spin the premium roulette wheel to unlock exclusive vault rewards. Limited invitations available.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://example.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script><!-- Schema.org (JSON-LD for rich results) -->
+  
 </head>
 <body>
     <canvas id="confetti-canvas"></canvas>
@@ -635,9 +130,9 @@
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-links">
-                    <a href="#terms" class="footer-link">Terms of Service</a>
+                    <a href="/terms.html" class="footer-link">Terms of Service</a>
                     <span class="footer-separator">|</span>
-                    <a href="#privacy" class="footer-link">Privacy Policy</a>
+                    <a href="privacy.html" class="footer-link">Privacy Policy</a>
                     <span class="footer-separator">|</span>
                     <span>18+ Only. Gamble Responsibly.</span>
                 </div>
@@ -665,8 +160,7 @@
                 <h2 class="modal-title gradient">You Hit Zero — Vault Access Granted</h2>
                 
                 <img 
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='%23ffd700'/%3E%3Ctext x='100' y='115' text-anchor='middle' fill='%23000' font-size='48' font-weight='bold'%3EVN%3C/text%3E%3C/svg%3E"
-                    alt="VegasNova Casino Logo" 
+                    src="/assets/img/vegas-nova-logo.png" alt="VegasNova Casino Logo" 
                     class="modal-logo"
                 >
                 
@@ -693,176 +187,6 @@
         </div>
     </div>
 
-    <script>
-        // State management
-        let isSpinning = false;
-        let spinCount = 0;
-        let rotation = 0;
-        let confettiInterval = null;
-
-        // Elements
-        const spinButton = document.getElementById('spinButton');
-        const wheelWrapper = document.getElementById('wheelWrapper');
-        const missModal = document.getElementById('missModal');
-        const winModal = document.getElementById('winModal');
-
-        // Confetti functionality
-        function startConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const confetti = [];
-            const confettiCount = 200;
-            const colors = ['#FFD700', '#FFA500', '#FFFF00', '#FF6347'];
-
-            for (let i = 0; i < confettiCount; i++) {
-                confetti.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height - canvas.height,
-                    r: Math.random() * 6 + 4,
-                    d: Math.random() * confettiCount,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    tilt: Math.random() * 10 - 10,
-                    tiltAngleIncremental: Math.random() * 0.07 + 0.05,
-                    tiltAngle: 0
-                });
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                confetti.forEach((c, i) => {
-                    ctx.beginPath();
-                    ctx.lineWidth = c.r / 2;
-                    ctx.strokeStyle = c.color;
-                    ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
-                    ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
-                    ctx.stroke();
-
-                    c.tiltAngle += c.tiltAngleIncremental;
-                    c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
-                    c.x += Math.sin(c.d);
-                    c.tilt = Math.sin(c.tiltAngle - i / 3) * 15;
-
-                    if (c.y > canvas.height) {
-                        confetti[i] = {
-                            x: Math.random() * canvas.width,
-                            y: -30,
-                            r: c.r,
-                            d: c.d,
-                            color: c.color,
-                            tilt: c.tilt,
-                            tiltAngleIncremental: c.tiltAngleIncremental,
-                            tiltAngle: c.tiltAngle
-                        };
-                    }
-                });
-
-                confettiInterval = requestAnimationFrame(draw);
-            }
-
-            draw();
-        }
-
-        function stopConfetti() {
-            if (confettiInterval) {
-                cancelAnimationFrame(confettiInterval);
-                confettiInterval = null;
-                const canvas = document.getElementById('confetti-canvas');
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        // Spin wheel functionality
-        function handleSpin() {
-            if (isSpinning) return;
-
-            const isFirst = spinCount === 0;
-            const duration = isFirst ? 4500 : 5200;
-            
-            isSpinning = true;
-            spinCount++;
-            spinButton.disabled = true;
-            spinButton.textContent = 'SPINNING...';
-
-            const current = rotation;
-            const remainder = ((current % 360) + 360) % 360;
-            let target = current;
-
-            if (isFirst) {
-                // First spin - miss the zero
-                const offset = 120;
-                target = current + 4 * 360 + offset;
-            } else {
-                // Second spin - land on zero
-                const correction = (360 - remainder) % 360;
-                target = current + 6 * 360 + correction;
-            }
-
-            rotation = target;
-            wheelWrapper.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.85, 0.25, 1)`;
-            wheelWrapper.style.transform = `rotate(${target}deg)`;
-
-            setTimeout(() => {
-                isSpinning = false;
-                spinButton.disabled = false;
-                spinButton.textContent = 'SPIN NOW';
-
-                if (isFirst) {
-                    missModal.classList.add('active');
-                } else {
-                    winModal.classList.add('active');
-                    startConfetti();
-                    setTimeout(stopConfetti, 5000);
-                }
-            }, duration + 100);
-        }
-
-        // Modal handlers
-        function handleSpinAgain() {
-            missModal.classList.remove('active');
-            handleSpin();
-        }
-
-        function closeWinModal() {
-            winModal.classList.remove('active');
-            stopConfetti();
-        }
-
-        // Close modal on overlay click
-        missModal.addEventListener('click', (e) => {
-            if (e.target === missModal) {
-                missModal.classList.remove('active');
-            }
-        });
-
-        winModal.addEventListener('click', (e) => {
-            if (e.target === winModal) {
-                closeWinModal();
-            }
-        });
-
-        // Spin button event
-        spinButton.addEventListener('click', handleSpin);
-
-        // VIP Form
-        document.getElementById('vipForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('emailInput').value;
-            console.log('VIP Access requested for:', email);
-            alert('VIP Access requested for: ' + email);
-            document.getElementById('emailInput').value = '';
-        });
-
-        // Resize canvas on window resize
-        window.addEventListener('resize', () => {
-            const canvas = document.getElementById('confetti-canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>
