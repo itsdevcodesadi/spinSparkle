@@ -261,28 +261,14 @@ body {
 }
 
 
-/* keep this for non-Safari (desktop / chrome) */
 .fixed-bg {
   position: fixed;
-  inset: 0;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
-            url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-backface-visibility: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+              url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
 }
-
-/* reduce heavy repaint-causing effects on small devices (helps a lot) */
-@media (max-width: 900px) {
-  .vip-section { backdrop-filter: none; }      /* expensive on iOS */
-  .roulette-wheel { box-shadow: none; }        /* large shadows cause repaints */
-  .drop-shadow-2xl { filter: none; }           /* disables drop-shadow on mobiles */
-}
-
 
 /* Make sure site content sits above background */
 .site-content {
