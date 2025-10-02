@@ -34,8 +34,6 @@
   box-sizing: border-box;
 }
 
-
-
 body {
   position: relative;
   min-height: 100vh;
@@ -45,7 +43,6 @@ body {
     "Helvetica Neue", Arial, sans-serif;
   /* Remove the background from body */
   background: none;
-  scroll-behavior: smooth;
 }
 
 /* Typography */
@@ -269,8 +266,14 @@ body {
   inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
   z-index: 0;
   pointer-events: none;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
               url("/assets/img/casino-interior-bg.jpg") center/cover no-repeat;
+  background-size: cover;
+  z-index: -1;
 }
 
 /* Make sure site content sits above background */
@@ -280,11 +283,7 @@ body {
 }
 
 
-/* Hero background */
-.hero-bg {
-  background-size: cover;
-  background-position: center;
-}
+
 
 @media (max-width: 571px) {
   .hero-bg h1 {
